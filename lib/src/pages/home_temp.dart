@@ -10,7 +10,8 @@ class HomePageTemp extends StatelessWidget {
         title: Text('Componentes Temp'),
       ),
       body: ListView(
-        children: _criarItens(),
+        //children: _criarItens(),
+        children: _criarItensCurto(),
       ),
     );
   }
@@ -31,5 +32,23 @@ class HomePageTemp extends StatelessWidget {
         ..add(Divider());
     }
     return lista;
+  }
+
+  List<Widget> _criarItensCurto() {
+    return opcoes.map((item) {
+      //Tem que regressar um widget
+      return Column(
+        children: [
+          ListTile(
+            title: Text(item + '!'),
+            subtitle: Text('Subtitulo'),
+            leading: Icon(Icons.star_outline),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {},
+          ),
+          Divider(),
+        ],
+      );
+    }).toList();
   }
 }
