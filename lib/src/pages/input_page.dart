@@ -8,7 +8,10 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  late String _nome;
+  String _nome = '';
+  String _email = '';
+  String _data = '';
+  TextEditingController _inputData = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,17 @@ class _InputPageState extends State<InputPage> {
         ),
         body: ListView(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-          children: [_criarInput()],
+          children: [
+            _criarInput(),
+            Divider(),
+            _criarEmail(),
+            Divider(),
+            _criarPassword(),
+            Divider(),
+            _criarData(context),
+            Divider(),
+            _criarPessoa(),
+          ],
         ));
   }
 
@@ -30,7 +43,7 @@ class _InputPageState extends State<InputPage> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        counterText: 'Letras',
+        counterText: 'Letras ${_nome.length}',
         hintText: 'Insira um texto',
         labelText: 'Escreva Seu Nome',
         helperText: 'Apenas o Primeiro Nome',
@@ -39,9 +52,97 @@ class _InputPageState extends State<InputPage> {
       ),
       //Pegando texto escrito
       onChanged: (valor) {
-        _nome = valor;
-        print(_nome);
+        setState(() {
+          _nome = valor;
+          print(_nome);
+        });
       },
     );
+  }
+
+  Widget _criarPessoa() {
+    return ListTile(
+      title: Text('Nome es: $_nome'),
+      subtitle: Text('Email: $_email'),
+    );
+  }
+
+  _criarEmail() {
+    return TextField(
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        hintText: 'Email',
+        labelText: 'Email',
+        helperText: 'Correio Eletronico',
+        suffixIcon: Icon(Icons.alternate_email),
+        icon: Icon(Icons.email),
+      ),
+      //Pegando texto escrito
+      onChanged: (valor) {
+        setState(() {
+          _nome = valor;
+          print(_nome);
+        });
+      },
+    );
+  }
+
+  _criarPassword() {
+    return TextField(
+      obscureText: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        hintText: 'Password',
+        labelText: 'Password',
+        suffixIcon: Icon(Icons.lock_open),
+        icon: Icon(Icons.lock),
+      ),
+    );
+  }
+
+  _criarData(BuildContext context) {
+    return TextField(
+      enableInteractiveSelection: false,
+      //controlador
+      controller: _inputData,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        hintText: 'Data de Nascimento',
+        labelText: 'Data de Nascimento',
+        suffixIcon: Icon(Icons.perm_contact_calendar),
+        icon: Icon(Icons.calendar_today),
+      ),
+      onTap: () {
+        //tirar o foco do campo para evitar alteracao
+        FocusScope.of(context).requestFocus(new FocusNode());
+        _selectDate(context);
+      },
+    );
+  }
+
+  //Metodo do datePicker
+  _selectDate(BuildContext context) async {
+    DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: new DateTime.now(),
+        //Restringir o selector
+        firstDate: new DateTime(2020),
+        lastDate: new DateTime(2023),
+        //Mudar o idioma
+        locale: Locale('pt'));
+    if (picked != null) {
+      setState(() {
+        _data = picked.toString();
+        //Inserindo a data no textField
+        _inputData.text = _data;
+      });
+    }
   }
 }
