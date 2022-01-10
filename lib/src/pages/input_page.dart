@@ -11,6 +11,8 @@ class _InputPageState extends State<InputPage> {
   String _nome = '';
   String _email = '';
   String _data = '';
+  String _opcaoSelecionada = 'Voar';
+  List<String> _poderes = ['Voar', 'Raio X', 'Super Forca', 'Adilson'];
   TextEditingController _inputData = new TextEditingController();
 
   @override
@@ -29,6 +31,8 @@ class _InputPageState extends State<InputPage> {
             _criarPassword(),
             Divider(),
             _criarData(context),
+            Divider(),
+            _criarDropDown(),
             Divider(),
             _criarPessoa(),
           ],
@@ -144,5 +148,30 @@ class _InputPageState extends State<InputPage> {
         _inputData.text = _data;
       });
     }
+  }
+
+  //Lista dos elementos
+  List<DropdownMenuItem<String>> getOpcoesDropdown() {
+    List<DropdownMenuItem<String>> lista = [];
+    for (var poder in _poderes) {
+      lista.add(DropdownMenuItem(
+        child: Text(poder),
+        value: poder,
+      ));
+    }
+    return lista;
+  }
+
+  _criarDropDown() {
+    return DropdownButton(
+      //valor atual da opcao selecionada
+      value: _opcaoSelecionada,
+      items: getOpcoesDropdown(),
+      onChanged: (opt) {
+        setState(() {
+          _opcaoSelecionada = opt.toString();
+        });
+      },
+    );
   }
 }
