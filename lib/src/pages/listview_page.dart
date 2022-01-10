@@ -27,11 +27,13 @@ class _ListaPageState extends State<ListaPage> {
       itemBuilder: (BuildContext context, int index) {
         final imagem = _listaNumeros[index];
 
-        return const FadeInImage(
-          image: NetworkImage(
-              'https://i.natgeofe.com/n/2a832501-483e-422f-985c-0e93757b7d84/6.jpg'),
-          placeholder: AssetImage('assests/jar-loading.gif'),
+        return Image(
+          image: NetworkImage('https://picsum.photos/500/300/?image=$imagem'),
         );
+        // return FadeInImage(
+        //   image: NetworkImage('https://picsum.photos/500/300/?image=$imagem'),
+        //   placeholder: const AssetImage('assests/jar-loading.gif'),
+        // );
       },
     );
   }
