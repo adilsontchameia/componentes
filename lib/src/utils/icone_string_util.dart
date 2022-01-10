@@ -5,6 +5,7 @@ final _icons = <String, IconData>{
   'accessibility': Icons.accessibility,
   'folder_open': Icons.folder_open,
   'donut_large': Icons.donut_large,
+  'input': Icons.input,
 };
 
 final _iconFinal = <String, IconData>{'right': Icons.keyboard_arrow_right};
