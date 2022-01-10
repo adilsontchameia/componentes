@@ -66,9 +66,9 @@ class _InputPageState extends State<InputPage> {
 
   Widget _criarPessoa() {
     return ListTile(
-      title: Text('Nome es: $_nome'),
-      subtitle: Text('Email: $_email'),
-    );
+        title: Text('Nome es: $_nome'),
+        subtitle: Text('Email: $_email'),
+        leading: Text(_opcaoSelecionada));
   }
 
   _criarEmail() {
@@ -163,15 +163,20 @@ class _InputPageState extends State<InputPage> {
   }
 
   _criarDropDown() {
-    return DropdownButton(
-      //valor atual da opcao selecionada
-      value: _opcaoSelecionada,
-      items: getOpcoesDropdown(),
-      onChanged: (opt) {
-        setState(() {
-          _opcaoSelecionada = opt.toString();
-        });
-      },
-    );
+    return Row(children: [
+      Icon(Icons.select_all),
+      SizedBox(width: 30.0),
+      Expanded(
+        child: DropdownButton(
+            //valor atual da opcao selecionada
+            value: _opcaoSelecionada,
+            items: getOpcoesDropdown(),
+            onChanged: (opt) {
+              setState(() {
+                _opcaoSelecionada = opt.toString();
+              });
+            }),
+      )
+    ]);
   }
 }
