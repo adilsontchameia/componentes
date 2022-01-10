@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
 
   List<Widget> _listaItens(List<dynamic> data, BuildContext context) {
     final List<Widget> opcoes = [];
-    data.forEach((opt) {
+    for (var opt in data) {
       final widgetTemp = ListTile(
         title: Text(opt['texto']),
         leading: getIcon(opt['icon']),
@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
       opcoes
         ..add(widgetTemp)
         ..add(Divider());
-    });
+    }
     return opcoes;
   }
 }
