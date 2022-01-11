@@ -60,23 +60,42 @@ class _ListaPageState extends State<ListaPage> {
   }
 
   Widget _criarLista() {
-    return ListView.builder(
-      controller: _scrollController,
-      //quantidade de artigos na lista
-      itemCount: _listaNumeros.length,
-      //forma como vai se mostrar na tela
-      itemBuilder: (BuildContext context, int index) {
-        final imagem = _listaNumeros[index];
+    return RefreshIndicator(
+      //Pull to refresh
+      onRefresh: obterPagina1,
+      child: ListView.builder(
+        controller: _scrollController,
+        //quantidade de artigos na lista
+        itemCount: _listaNumeros.length,
+        //forma como vai se mostrar na tela
+        itemBuilder: (BuildContext context, int index) {
+          final imagem = _listaNumeros[index];
 
-        return Image(
-          image: NetworkImage('https://picsum.photos/500/300/?image=$imagem'),
-        );
-        // return FadeInImage(
-        //   image: NetworkImage('https://picsum.photos/500/300/?image=$imagem'),
-        //   placeholder: const AssetImage('assests/jar-loading.gif'),
-        // );
-      },
+          return Image(
+            image: NetworkImage('https://picsum.photos/500/300/?image=$imagem'),
+          );
+          // return FadeInImage(
+          //   image: NetworkImage('https://picsum.photos/500/300/?image=$imagem'),
+          //   placeholder: const AssetImage('assests/jar-loading.gif'),
+          // );
+        },
+      ),
     );
+  }
+
+  //Pull to refresh
+  Future<Null> obterPagina1() async {
+    final duration = new Duration(seconds: 4);
+    Timer(duration, () {
+      //apagar todas
+      _listaNumeros.clear();
+      //novas imagens
+      _ultimoItem++;
+      //mostrar
+      _aumentar10();
+    });
+
+    return Future.delayed(duration);
   }
 
   void _aumentar10() {
