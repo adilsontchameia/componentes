@@ -8,7 +8,26 @@ class ListaPage extends StatefulWidget {
 }
 
 class _ListaPageState extends State<ListaPage> {
-  List<int> _listaNumeros = [1, 2, 3, 4, 5];
+  //Controlador da lista
+  ScrollController _scrollController = new ScrollController();
+  List<int> _listaNumeros = [];
+  int _ultimoItem = 0;
+
+  //que vai iniciar no inicio do app
+  @override
+  void initState() {
+    super.initState();
+
+    _aumentar10();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _aumentar10();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +40,7 @@ class _ListaPageState extends State<ListaPage> {
 
   Widget _criarLista() {
     return ListView.builder(
+      controller: _scrollController,
       //quantidade de artigos na lista
       itemCount: _listaNumeros.length,
       //forma como vai se mostrar na tela
@@ -36,5 +56,13 @@ class _ListaPageState extends State<ListaPage> {
         // );
       },
     );
+  }
+
+  void _aumentar10() {
+    for (var i = 1; i < 10; i++) {
+      _ultimoItem++;
+      _listaNumeros.add(_ultimoItem);
+    }
+    setState(() {});
   }
 }
